@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "{{.Values.profile}}-deployment"
+  namespace: {{.Values.namespace}}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      type: {{ .Values.serviceName }}
+      service: {{ .Values.serviceName }}
+      name: {{ .Values.serviceName }}
+  template:
+    metadata:
+      name: {{ .Values.serviceName }}
+      labels:
+        type: {{ .Values.serviceName }}
+        service: {{ .Values.serviceName }}
+        name: {{ .Values.serviceName }}
+    spec:
+      containers:
+        - name: spring-boot-helm
+          imagePullPolicy: Never
+          image: silentsudo/spring-boot-helm:latest
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: {{ .Values.profile }}
+          ports:
+            - containerPort: 8080
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: "/{{ .Values.profile }}/actuator/health/liveness"
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: "/{{ .Values.profile }}/actuator/health/readiness"
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 5

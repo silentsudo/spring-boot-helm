@@ -1,0 +1,4 @@
+name: spring-boot-qa
+namespace: qa
+profile: qa
+serviceName: web-app-service-qa

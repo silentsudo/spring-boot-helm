@@ -1,0 +1,4 @@
+name: spring-boot-prod
+namespace: prod
+profile: prod
+serviceName: web-app-service-prod

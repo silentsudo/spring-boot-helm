@@ -1,0 +1,4 @@
+name: spring-boot
+namespace: default
+profile: default
+serviceName: web-app-service-default

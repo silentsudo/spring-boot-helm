@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  # name: ingress
+  name: "ingress-{{.Values.profile}}"
+  namespace: {{.Values.namespace}}
+  annotations:
+    ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    - host: {{ .Values.profile }}.spring-boot.com
+    - http:
+        paths:
+          - path: /{{ .Values.profile }}
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Values.serviceName }}
+                port:
+                  number: 8080

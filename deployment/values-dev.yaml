@@ -1,0 +1,4 @@
+name: spring-boot-dev
+namespace: dev
+profile: dev
+serviceName: web-app-service-dev
